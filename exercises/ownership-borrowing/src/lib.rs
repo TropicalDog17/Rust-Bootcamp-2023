@@ -3,7 +3,7 @@
 fn exercise1() {
     // Use as many approaches as you can to make it work
     let x = String::from("hello, world");
-    let y = x;
+    let y = x.clone();
     let z = &y;
 }
 
@@ -59,17 +59,17 @@ fn exercise4(value: u32) -> String {
 // Make it compile
 use std::collections::HashMap;
 fn exercise5() {
-    let mut my_map = HashMap::from([(1, "1.0".to_string()), (2, "2.0".to_string())]);
+    let mut my_map = HashMap::from([(1, "1.0"), (2, "2.0")]);
 
     let key = 3;
+    let value = "3.0".to_string();
 
     let res = match my_map.get(&key) {
-        Some(child) => child.to_owned(),
+        Some(child) => *child,
         None => {
-            let value = "3.0".to_string();
-            my_map.insert(key, value.clone());
+            my_map.insert(key, &value);
             // HERE IT FAILS
-            value
+            &value
         }
     };
 
@@ -96,7 +96,7 @@ fn exercise6() {
         let data: Vec<&str> = s.split("\t").collect();
         let key = data[0];
         if prev_key.len() == 0 {
-            prev_key = key.to_owned();
+            prev_key = key.to_string();
         }
     }
 }
